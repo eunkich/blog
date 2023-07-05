@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eunki Chung">
+<meta name="dcterms.date" content="2023-01-14">
+
+<title>Eunki Chung - Unbiased Sample Variance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon/favicon-32x32.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/eunki-chung" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+          <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Unbiased Sample Variance</h1>
+            <p class="subtitle lead">Bessel’s correction for the sample variance</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Eunki Chung </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 14, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="why-do-we-divide-by-n-1-instead-of-n-when-we-calculate-the-sample-variance" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-divide-by-n-1-instead-of-n-when-we-calculate-the-sample-variance">Why do we divide by <span class="math inline">\(n-1\)</span> instead of <span class="math inline">\(n\)</span> when we calculate the sample variance?</h2>
+<p>The definition of Variance of a random variable X is given by <span class="math display">\[
+Var[X] = E\left[(X_i - E[X])^2\right]
+\]</span></p>
+<p>For the sample estimator of the variance, we often use the following sample variance formula.</p>
+<p><span class="math display">\[
+\hat{\sigma}^2 = \frac{1}{n-1}\left(\sum_{i=1}^n (X_i - \bar{X})^2\right)
+\]</span></p>
+<p>Why do we divide by <span class="math inline">\((n-1)\)</span> instead of <span class="math inline">\(n\)</span>? This might be confusing since we don’t divide by <span class="math inline">\((n-1)\)</span> for the sample mean <span class="math inline">\(\bar{X} = \frac{\sum_{i=1}^n X_i}{n}\)</span>.</p>
+<section id="short-answer" class="level3">
+<h3 class="anchored" data-anchor-id="short-answer">Short answer</h3>
+<p>It’s because the sample variance <span class="math inline">\(\hat{\sigma}^2\)</span> with <span class="math inline">\((n-1)\)</span> denominator is an unbiased estimator of the true variance <span class="math inline">\(\sigma^2\)</span> assuming that the samples are independent and identically distributed(iid).</p>
+<blockquote class="blockquote">
+<p>This behavior is called <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>. One thing you should keep in mind is that the Bessel’s correction is only for the samples from iid distribuiton. If the samples are not iid, (e.g.&nbsp;Time-Series data) the Bessel’s correction would not yield an unbiased estimator.</p>
+</blockquote>
+</section>
+<section id="long-answer" class="level3">
+<h3 class="anchored" data-anchor-id="long-answer">Long answer</h3>
+<section id="what-is-unbiased-estimator" class="level4">
+<h4 class="anchored" data-anchor-id="what-is-unbiased-estimator">What is unbiased estimator?</h4>
+<p>When we estimate some unknown parameter <span class="math inline">\(\theta\)</span>, we call an estimator <span class="math inline">\(\hat{\theta}\)</span> is unbiased when <span class="math inline">\(E[\hat{\theta}] = \theta\)</span>. We may think of an estimator <span class="math inline">\(\hat{\theta}\)</span> as an educated guess for an unknown parameter <span class="math inline">\(\theta\)</span> under the available finite sample data <span class="math inline">\((X_1, X_2, \cdots, X_n)\)</span>. Unbiasedness is one of the desirable properties for an estimator.</p>
+</section>
+<section id="unbiasedness-of-sample-variance" class="level4">
+<h4 class="anchored" data-anchor-id="unbiasedness-of-sample-variance">Unbiasedness of sample variance</h4>
+<p>Let <span class="math inline">\(X_i\)</span>’s <span class="math inline">\((i = 1, 2, \cdots, n)\)</span> are iid random samples, from a distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> , and let <span class="math inline">\(\bar{X} = \frac{\sum_{i=1}^n X_i}{n}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\sigma}^2 &amp;= \frac{1}{n-1}\left(\sum_{i=1}^n (X_i - \bar{X})^2\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n (X_i^2 - 2X_i\bar{X} + \bar{X}^2)\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - \sum_{i=1}^n 2X_i\bar{X} + \sum_{i=1}^n \bar{X}^2)\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - 2\bar{X}\sum_{i=1}^n X_i + n \bar{X}^2)\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - 2\bar{X}n\bar{X} + n \bar{X}^2)\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - 2n\bar{X}^2 + n \bar{X}^2)\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - n\bar{X}^2\right) \\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\sigma}^2] &amp;= E\left[\frac{1}{n-1}\left(\sum_{i=1}^n X_i^2 - n\bar{X}^2\right)\right] \\
+&amp;= \frac{1}{n-1}E\left[\left(\sum_{i=1}^n X_i^2 - n\bar{X}^2\right)\right] \\
+&amp;= \frac{1}{n-1}\left(E\left[\sum_{i=1}^n X_i^2 \right] - E\left[ n\bar{X}^2\right]\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n E\left[ X_i^2 \right] - nE\left[ \bar{X}^2\right]\right) \qquad (1)\\
+\end{aligned}
+\]</span></p>
+<p>Note that <span class="math display">\[
+\begin{aligned}
+\sigma^2 &amp;= E[X^2] - E[X]^2 \\
+&amp;= E[X^2] - \mu^2 \\
+\\
+\therefore \quad E[X^2] &amp;= \sigma^2 + \mu^2 \qquad (2)
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+Var[\bar{X}] &amp;= E[\bar{X}^2] - E[\bar{X}]^2 \\
+E[\bar{X}^2] &amp;= Var[\bar{X}] + E[\bar{X}]^2 \\
+\end{aligned}
+\]</span> i) <span class="math display">\[
+\begin{aligned}
+Var[\bar{X}] &amp;= Var\left[ \frac{\sum X_i}{n} \right] \\
+&amp;= \frac{1}{n^2} Var\left[ \sum X_i \right] \\
+&amp;= \frac{1}{n^2} \sum Var\left[X_i \right] \quad \because X_i\text{'s are mutually ind.}\\
+&amp;= \frac{1}{n^2} n\sigma^2 \quad \because X_i\text{'s are identically distributed}\\
+&amp;=\frac{\sigma^2}{n}
+\end{aligned}
+\]</span> ii)</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\bar{X}] &amp;= E\left[{\frac{\sum X_i}{n}}\right] \\
+&amp;= \frac{1}{n}{\sum E[X_i]} \\
+&amp;= \frac{1}{n}n\mu \\
+&amp;= \mu \\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[\therefore \quad E[\bar{X}^2] = Var[\bar{X}] + E[\bar{X}]^2 =
+\frac{\sigma^2}{n} - \mu^2 \qquad (3)
+\]</span> Thus, from (1), (2), (3),</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\sigma}^2] &amp;= \frac{1}{n-1}\left(\sum_{i=1}^n E\left[ X_i^2 \right] - nE\left[ \bar{X}^2\right]\right) \\
+&amp;= \frac{1}{n-1}\left(\sum_{i=1}^n (\sigma^2 + \mu^2) - n\left(\frac{\sigma^2}{n} - \mu^2\right)\right) \\
+&amp;= \frac{1}{n-1}\left(n (\sigma^2 + \mu^2) - n\left(\frac{\sigma^2}{n} - \mu^2\right)\right) \\
+&amp;= \frac{1}{n-1}\left(n\sigma^2 + n\mu^2 - \sigma^2 - n\mu^2\right) \\
+&amp;= \frac{1}{n-1}(n - 1) \sigma^2 \\
+&amp;= \sigma^2 \\
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\therefore \quad E[\hat{\sigma}^2] = \sigma^2
+\]</span></p>
+<p>Since the sample variance with the denominator of <span class="math inline">\((n-1)\)</span> is an unbiased estimator for the true variance <span class="math inline">\(\sigma^2\)</span>, any other estimator with different denominator would be biased.</p>
+</section>
+<section id="what-about-the-sample-mean" class="level4">
+<h4 class="anchored" data-anchor-id="what-about-the-sample-mean">What about the sample mean?</h4>
+<p>Along the way to show the <span class="math inline">\(\hat{\sigma}^2\)</span> is unbiased, we’ve already shown why we don’t apply the same logic for the sample mean <span class="math inline">\(\bar{X}\)</span>. In ii), we derived that <span class="math inline">\(\bar{X}\)</span> is unbiased <span class="math inline">\(E[\bar{X}] = \mu\)</span> without any correction, unlike the sample variance.</p>
+</section>
+</section>
+</section>
+<section id="implementations" class="level2">
+<h2 class="anchored" data-anchor-id="implementations">Implementations</h2>
+<p>In most cases, we don’t explicitly calculate the sample variance. Instead, we call the implemented function from the numerical library we use. Thus, it is useful to know whether the function uses Bessel’s correction or not, since it varies by the implementation details.</p>
+<section id="numpy" class="level3">
+<h3 class="anchored" data-anchor-id="numpy">Numpy</h3>
+<p>Numpy has the <a href="https://numpy.org/doc/stable/reference/generated/numpy.var.html"><code>np.var</code></a> method to calculate the variance of a given input. <code>np.var</code> returns the uncorrected variance, which is divided by <span class="math inline">\(n\)</span> unless you specify <code>ddof</code> argument. To get an unbiased sample variance, you have to add <code>ddof=1</code>. The <code>np.var</code> will return the result divided by <code>n-ddof</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>np.var(x) <span class="co"># Divide by n where n = len(x)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>np.var(x, ddof<span class="op">=</span><span class="dv">1</span>) <span class="co"># Divide by (n-1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pandas" class="level3">
+<h3 class="anchored" data-anchor-id="pandas">Pandas</h3>
+<p>Pandas has a method in its DataFrame class, <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.var.html"><code>pd.DataFrame.var</code></a>. Unlike the <code>np.var</code>, <code>pd.DataFrame.var</code> returns the corrected sample variance with the denominator of <span class="math inline">\((n-1)\)</span>. This can also be changed by specifying the <code>ddof</code> argument as in <code>np.var</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pd.DataFrame([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x.var() <span class="co"># Divide by (n-1)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x.var(ddof<span class="op">=</span><span class="dv">0</span>) <span class="co"># Divide by n = (n-ddof)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="r" class="level3">
+<h3 class="anchored" data-anchor-id="r">R</h3>
+<p>Standard function <a href="https://www.rdocumentation.org/packages/cmvnorm/versions/1.0-7/topics/var"><code>var</code></a> in R returns the unbiased sample variance with <span class="math inline">\((n-1)\)</span> denominator. Unlike numpy and pandas, this behavior cannot be changed. Thus you should correct externally if you need to.</p>
+<blockquote class="blockquote">
+<p>These functions use&nbsp;<span class="math inline">\(n−1\)</span>&nbsp;on the denominator purely for consistency with&nbsp;<code>stats::var()</code>&nbsp;(for the record, I disagree with the rationale for&nbsp;<span class="math inline">\(n−1\)</span>). -R Documentation-</p>
+</blockquote>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">len</span>(x)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x) <span class="co"># Divide by (n-1)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(x) <span class="sc">*</span> (n<span class="dv">-1</span>) <span class="sc">/</span> n <span class="co"># Divide by n</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Now we know why we divide by <span class="math inline">\(n-1\)</span> instead of <span class="math inline">\(n\)</span> for the sample variance. However, this doesn’t mean that you should always use Bessel’s correction. As I mentioned in the beginning, Bessel’s correction only works with the iid samples. And even for the iid samples, one might want to use a different estimator depending on the problem. Again, unbiasedness is just another good property to have. In fact, the uncorrected sample variance gives the Maximum Likelihood Estimator(MLE) when the samples are from iid normal. If one prefers the maximum likelihood over the unbiasedness, the uncorrected sample variance still gives a good estimation.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

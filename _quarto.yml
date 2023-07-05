@@ -1,0 +1,34 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "!internal/"
+
+website:
+  title: "Eunki Chung"
+  favicon: assets/favicon/favicon-32x32.png
+  navbar:
+    title: false
+    # logo: assets/favicon/favicon-32x32.png
+    background: "#FFFFFF"
+    collapse-below: sm
+    collapse: false
+    # left:
+    right:
+      - index.qmd
+      - blog.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: linkedin
+        href: https://linkedin.com/in/eunki-chung
+format:
+  html:
+    page-layout: article
+    theme: flatly
+    css: styles.css
+    fontsize: 11pt
+
+    
+
+
+

@@ -1,0 +1,52 @@
+---
+title: "About"
+title-block-banner: true
+---
+<script src="_extensions/mcanouil/iconify/iconify-icon.min.js"></script>
+
+<div style="text-align: left"> 
+### **Eunki Chung**
+# 
+
+I'm just a curious mind exploring the world of **Computational Finance**, always
+excited about topics like **Machine Learning**, **Statistics**, and **DeFi** (a
+fancy term for the future of finance). I spend lots of time reading about math and programming—my two loves.  
+
+And when I need a break? You'll find me bouldering, pushing my physical
+boundaries as much as my intellectual ones.  
+
+#
+</div>
+
+<div class="quarto-about-jolla">
+   <!-- <hr class="about-sep"> -->
+   <div class="about-links">
+   <a href="mailto: eunkich@uw.edu" class="about-link">
+      <i class="bi bi-mail"></i>
+      <span class="about-link-text"><iconify-icon inline="" icon="clarity:email-line"></iconify-icon> eunkich@uw.edu</span>
+   </a> 
+   </div>
+   </p>
+   <div class="about-links">
+   <a href="https://drive.google.com/file/d/1-uMyPzgWVYiYhvUuPa5WJAQd33zwC4UY/view?usp=share_link" class="about-link">
+      <span class="about-link-text"><iconify-icon inline="" icon="pepicons-pop:cv"></iconify-icon> Resume</span>
+   </a>
+   <a href="https://linkedin.com/in/eunki-chung" class="about-link">
+      <i class="bi bi-linkedin"></i>
+      <span class="about-link-text">LinkedIn</span>
+   </a>
+   <a href="https://github.com/eunkich" class="about-link">
+      <i class="bi bi-github"></i>
+      <span class="about-link-text">Github</span>
+   </a>
+   <a href="https://leetcode.com/eunkich" class="about-link">
+      <span class="about-link-text"><iconify-icon inline="" icon="simple-icons:leetcode"></iconify-icon> Leetcode</span>
+   </a>
+   </div>
+   </p>
+   </p>
+   </p>
+   </p>
+   <hr class="about-sep">
+   </div>
+</div>
