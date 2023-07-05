@@ -14,6 +14,12 @@ div.quarto-post .body {
     margin: auto;
 }
 
+/* Prevent buttons getting centered on small screen */
+#quarto-header>nav>div>ul {
+    width: 100%;
+    justify-content: flex-end
+}
+
 /* Keep body elements centered */
 body {
     max-width: 1000px;
