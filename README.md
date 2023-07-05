@@ -3,12 +3,12 @@
 Customized Quarto blog for my personal website
 
 ## Quickstart
-open the repo with VS Code.
+Open the repo with VS Code.
 
-Open command palette and hit `Dev Containers: open Folder in Container`
+Open command palette and hit `>Dev Containers: open Folder in Container`
 
 Open index.qmd and click render button on the upper right corner.
 
 Or
 
-Open command palette and hit `Quarto: Render Project`
+Open command palette and hit `>Quarto: Render Project`
