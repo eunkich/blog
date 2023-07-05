@@ -9,6 +9,6 @@ Open command palette and hit `>Dev Containers: open Folder in Container`
 
 Open index.qmd and click render button on the upper right corner.
 
-Or
+or
 
 Open command palette and hit `>Quarto: Render Project`
