@@ -6,6 +6,8 @@ project:
 
 website:
   title: "Eunki Chung"
+  site-url: 'https://eunkichung.netlify.app'
+  site-path: '/'
   favicon: assets/favicon/favicon-32x32.png
   navbar:
     title: false

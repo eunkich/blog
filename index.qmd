@@ -19,7 +19,6 @@ boundaries as much as my intellectual ones.
 </div>
 
 <div class="quarto-about-jolla">
-   <!-- <hr class="about-sep"> -->
    <div class="about-links">
    <a href="mailto: eunkich@uw.edu" class="about-link">
       <i class="bi bi-mail"></i>
