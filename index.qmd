@@ -1,6 +1,7 @@
 ---
 title: "About"
 title-block-banner: true
+comments: false
 ---
 <script src="_extensions/mcanouil/iconify/iconify-icon.min.js"></script>
 

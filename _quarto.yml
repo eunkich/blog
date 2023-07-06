@@ -23,12 +23,20 @@ website:
         href: https://github.com/
       - icon: linkedin
         href: https://linkedin.com/in/eunki-chung
+
 format:
   html:
     page-layout: article
     theme: flatly
     css: styles.css
     fontsize: 11pt
+
+comments:
+  giscus: 
+    repo: eunkich/blog
+    input-position: top
+    loading: lazy
+    
 
     
 

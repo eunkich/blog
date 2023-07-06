@@ -1,0 +1,63 @@
+---
+title: How to add commenting feature on quarto blog
+subtitle: Enabling public comments for blog posts with Giscus
+author: Eunki Chung
+date: 2023-07-05
+categories: [quarto]
+---
+
+Quarto supports [commenting
+features](https://quarto.org/docs/output-formats/html-basics.html#commenting)
+with the following three options.
+
+1. Hypothes.is
+2. Utterances
+3. Giscus
+
+Hypothes.is enables highlighting and annotation on any part of an article. However, it seems like it only works with several supported browsers on PC.
+
+Utterances leverages Github issues for comments. When someone leaves a comment on a post, the Utterances bot creates an issue on the designated repository.
+
+[Giscus](https://giscus.app), similar to Utterances, uses Github discussions instead of the issue tab and supports some additional customization features.
+
+I chose Giscus, and this post includes the necessary steps to adopt the commenting feature using Giscus.
+
+Firstly, you need a public Github repository to host the discussion on your website. Since I had a public repository for hosting my blog with Netlify, I used the same one for Giscus.
+
+Then, head to the [Giscus install page](https://github.com/apps/giscus) to install Giscus on your repo.
+
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/48481523/251310213-978e8822-cac4-4777-aeaa-3180bb41ceb5.png){width=80%
+fig-align="center"}
+
+Click 'Install' and select the target repository. In my case, I used eunkich/blog.
+
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/48481523/251310886-3d20d498-cd75-4e07-9d21-0577679144b6.png){width=40% 
+fig-align="center"}
+
+Finally, you need to enable the 'Discussions' feature on your repository. On the
+main page of your repository, navigate to `Settings` > `Features` > `Discussions`. Check the
+'Discussions' box if it is unselected.
+
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/48481523/251311452-8017da63-6d52-4405-9e20-0091368a0c76.png){width=60%
+fig-align="center"}
+
+Now you need to configure Giscus. Head to [Giscus](https://giscus.app) and
+scroll down to configuration section. You should see a green Success sign
+when you type in your repository.
+
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/48481523/251312503-c9152167-b9bc-431c-b7a1-dde9570ccef1.png){width=60%
+fig-align="center"}
+
+To complete the process, you can manually finish the configuration and add the result to the blog template. But Quarto has an easier way to implement it. Just add the lines below to `_quarto.yml`. This enables the comment box for every post, so you may want to disable it for certain pages by adding `comments: false` in the configuration section of those pages.
+
+```{.yaml filename="_quarto.yml"}
+comments:
+  giscus: 
+    repo: eunkich/blog
+```
+
+You can also add [additional
+options](https://quarto.org/docs/reference/projects/websites.html#giscus) to
+customize your comment box, such as `theme`, `input-position`, and `loading`
+policy. Details regarding available options
+can be found on the Giscus [configuration page](https://giscus.app).
