@@ -2,12 +2,13 @@
 title: Arbitrage
 author: "Eunki Chung"
 subtitle: Definition and theorem related to arbitrage
+description-meta: Definition and theorem related to arbitrage
 layout: default
 date: 2022-11-4
 categories: [finance, mathematics]
 summary: Notes on arbitrage
 published: true
-bibliography: 2022-11-4-arbitrage.bib
+bibliography: ../_bibliography/2022-11-4-arbitrage.bib
 nocite: |
   @504notes, @lepinette:cel-02125685
 ---

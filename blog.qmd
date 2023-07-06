@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+description-meta: "Things Worth Remembering: My personal journal of interesting nuggets from the worlds of math, coding, and more. Simple things I stumble upon that I think are worth holding onto."
 listing:
   contents: posts
   sort: "date desc"

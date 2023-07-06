@@ -1,6 +1,7 @@
 ---
 title: How to add commenting feature on quarto blog
 subtitle: Enabling public comments for blog posts with Giscus
+description-meta: Enabling public comments for blog posts with Giscus
 author: Eunki Chung
 date: 2023-07-05
 categories: [quarto]

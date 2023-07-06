@@ -1,13 +1,14 @@
 ---
 title: Deriving conditional multivariate normal distribution
 subtitle: Conditional distribution when multivariate normal random vector is conditioned on its partition.
+description-meta: Conditional distribution when multivariate normal random vector is conditioned on its partition.
 author: Eunki Chung
 layout: default
 date: 2023-05-19
 categories: [statistics, mathematics]
 summary: Conditional distribution when multivariate normal random vector is conditioned on its partition.
 published: true
-bibliography: 2023-05-19-cond-mvnormal.bib
+bibliography: ../_bibliography/2023-05-19-cond-mvnormal.bib
 nocite: |
   @30600
 ---

@@ -1,6 +1,7 @@
 ---
 title: Deriving Black-Scholes Partial Differential Equation
 subtitle: Derive Black-Scholes PDE with pricing by replication
+description-meta: Derive Black-Scholes PDE with pricing by replication
 author: "Eunki Chung"
 layout: default
 date: 2022-11-25

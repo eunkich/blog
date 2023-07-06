@@ -1,5 +1,6 @@
 ---
 title: "About"
+description-meta: I’m just a curious mind exploring the world of Computational Finance, always excited about topics like Machine Learning, Statistics, and DeFi (a fancy term for the future of finance).
 title-block-banner: true
 comments: false
 ---

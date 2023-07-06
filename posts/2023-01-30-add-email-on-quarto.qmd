@@ -1,6 +1,7 @@
 ---
 title: How to add an email address on a pdf file rendered with Quarto
 subtitle: Customizing quarto document with a title.tex file
+description-meta: Customizing quarto document with a title.tex file
 author: Eunki Chung
 layout: default
 date: 2023-01-30

@@ -6,6 +6,7 @@ layout: default
 date: 2023-04-16
 categories: [mathematics]
 summary: Introduce a motivating examples of Importance Sampling in the univariate case and stochastic process.
+description-meta: Introduce a motivating examples of Importance Sampling in the univariate case and stochastic process.
 published: true
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Unbiased Sample Variance
 subtitle: Bessel's correction for the sample variance
+description-meta: Bessel's correction for the sample variance
 author: Eunki Chung
 layout: default
 date: 2023-01-14

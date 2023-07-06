@@ -1,6 +1,7 @@
 ---
 title: What is BLAS?
 subtitle: Notes on Basic Linear Algebra Subprograms
+description-meta: Notes on Basic Linear Algebra Subprograms
 author: Eunki Chung
 layout: default
 date: 2023-03-30
