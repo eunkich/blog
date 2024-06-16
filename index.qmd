@@ -10,9 +10,9 @@ comments: false
 ### **Eunki Chung**
 # 
 
-I'm just a curious mind exploring the world of **Computational Finance**, always
-excited about topics like **Machine Learning**, **Statistics**, and **DeFi** (a
-fancy term for the future of finance). I spend lots of time reading about math and programming—my two loves.  
+I'm just a curious mind exploring the world of **Data Science**, always
+excited about topics like **Machine Learning**, **Statistics** and
+**Quantitative Finance**. I spend lots of time reading about math and programming.  
 
 And when I need a break? You'll find me bouldering, pushing my physical
 boundaries as much as my intellectual ones.  
@@ -22,9 +22,9 @@ boundaries as much as my intellectual ones.
 
 <div class="quarto-about-jolla">
    <div class="about-links">
-   <a href="mailto: eunkich@uw.edu" class="about-link">
+   <a href="mailto: eunkich@gmail.com" class="about-link">
       <i class="bi bi-mail"></i>
-      <span class="about-link-text"><iconify-icon inline="" icon="clarity:email-line"></iconify-icon> eunkich@uw.edu</span>
+      <span class="about-link-text"><iconify-icon inline="" icon="clarity:email-line"></iconify-icon> eunkich@gmail.com</span>
    </a> 
    </div>
    </p>
