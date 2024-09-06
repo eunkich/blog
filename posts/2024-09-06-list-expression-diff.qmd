@@ -1,0 +1,113 @@
+---
+title: Understanding the Difference Between List Construction Methods in Python
+subtitle: "`[[0] * n for _ in range(m)]` vs `[[0] * n] * m`"
+description-meta: "`[[0] * n for _ in range(m)]` vs `[[0] * n] * m`"
+author: Eunki Chung
+layout: default
+date: 2024-09-05
+categories: [python, data structure]
+summary: The expression [[0] * n for _ in range(m)] creates independent rows in a matrix, while the expression [[0] * n] * m creates multiple references to the same row, causing unintended changes across all rows when one is modified.
+published: true
+---
+
+
+When initializing a nested list (or matrix) in Python, you may run into some unexpected behavior depending on how you construct the list. In this post, we’ll explore two approaches for creating a matrix and explain why they behave differently.
+
+Consider the following two methods for initializing a zero matrix in Python:
+
+```python
+# Using for loop expression
+matrix_comprehension = [[0] * n for _ in range(m)]
+
+# Using list multiplication
+matrix_multiplication = [[0] * n] * m
+```
+
+Both appear to create a matrix with `m` rows and `n` columns, filled with zeros. However, they behave differently when you modify elements in the matrix. The difference lies in how Python handles **object references**.
+
+### The Main Difference
+
+- **`[[0] * n for _ in range(m)]`**: This creates a new, independent list for each row. As a result, modifying one row does not affect any of the other rows.
+  
+- **`[[0] * n] * m`**: This creates multiple references to the **same list object**. All rows will refer to the same list in memory, meaning that changes to one row will affect all rows.
+
+### Example: Modifying the Matrix
+
+Let’s modify the matrix to see how the two approaches behave.
+
+1. **Using for loop expression**:
+
+    ```python
+    matrix_1 = [[0] * 3 for _ in range(2)]
+    matrix_1[0][0] = 1
+    print(matrix_1)
+    # Output: [[1, 0, 0], [0, 0, 0]]
+    ```
+
+    Here, modifying the first element of the first row only affects that row because each row is an independent list.
+
+2. **Using list multiplication**:
+
+    ```python
+    matrix_2 = [[0] * 3] * 2
+    matrix_2[0][0] = 1
+    print(matrix_2)
+    # Output: [[1, 0, 0], [1, 0, 0]]
+    ```
+
+    In this case, modifying the first element of the first row affects all rows because they all reference the same list.
+
+### Why Does This Happen?
+
+In Python, lists are **mutable objects**, which means that modifying a list changes the object itself. When you use list multiplication (`[[0] * n] * m`), Python creates one list and then reuses the reference to that list `m` times. This means that every row in the matrix points to the same list in memory.
+
+Here’s what happens internally in the second case:
+
+```python
+row = [0, 0, 0]
+matrix = [row, row]  # Both rows reference the same list
+```
+
+When you modify `matrix[0]`, you’re actually modifying the shared `row` object, and that change is reflected across all rows.
+
+In contrast, the first case creates a new list object for each row:
+
+```python
+matrix = [[0] * 3 for _ in range(2)]
+# This creates two independent lists:
+# matrix[0] = [0, 0, 0]
+# matrix[1] = [0, 0, 0]
+```
+
+As each row is a distinct object in memory, changes to one row don’t affect the others.
+
+When you need to create a matrix where each row is independent, always use list
+comprehension to ensure that changes to one row won’t affect any of the others.
+
+```python
+matrix = [[0] * n for _ in range(m)]
+```
+
+### But why is it okay to use the `*` operator in `[0] * n`?
+
+This is because `0` is an **integer**, and integers in Python are **immutable**. When you multiply a list like `[0] * n`, each element in the resulting list is a **separate copy** of the integer `0`. Since integers are immutable, there’s no risk of accidentally modifying other elements when you change one of them. For example:
+
+```python
+row = [0] * 3
+row[0] = 1
+print(row)
+# Output: [1, 0, 0]
+```
+
+Here, `row[0]` is modified to `1`, but the other elements remain `0`, because integers are immutable and each `0` is its own instance.
+
+However, when you multiply a list containing **mutable objects** (such as lists), you don’t get independent copies of those objects. Instead, you get multiple references to the same object, which can lead to unintended side effects when modifying the list, as we saw earlier with list multiplication.
+
+Thus, it’s safe to use the `*` operator with immutable types (like integers, strings, and tuples), but be cautious when using it with mutable types like lists or dictionaries.
+
+### Conclusion
+
+By understanding the difference between list comprehension and list
+multiplication, you can avoid common pitfalls when working with multidimensional
+lists in Python. The key takeaway is that **nested list generation with for loop creates independent lists**,
+while **list multiplication creates references to the same list**.
