@@ -29,7 +29,7 @@ boundaries as much as my intellectual ones.
    </div>
    </p>
    <div class="about-links">
-   <a href="https://drive.google.com/file/d/10pT6MlT1_KJV1Zml0w2RiThro9YyUS9-/view?usp=sharing" class="about-link">
+   <a href="https://drive.google.com/file/d/16BBw9Y1Qs5K6SFNElsRtN1u3ZqwlmNvO/view?usp=sharing" class="about-link">
       <span class="about-link-text"><iconify-icon inline="" icon="pepicons-pop:cv"></iconify-icon> Resume</span>
    </a>
    <a href="https://linkedin.com/in/eunki-chung" class="about-link">
